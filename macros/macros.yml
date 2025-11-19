@@ -1,0 +1,30 @@
+version: 2
+
+macros:
+  - name: suggest_clustering_keys
+    description: "{{ doc('suggest_clustering_keys') }}"
+    arguments:
+      - name: model_name
+        type: string
+        description: "The name of the model to analyze for clustering key suggestions."
+  - name: find_table_clustering_candidates
+    description: "{{ doc('find_table_clustering_candidates') }}"
+    arguments:
+      - name: lookback_days
+        type: integer
+        description: "[Optional] The number of days of query history to analyze (default: 7)."
+      - name: ignore_table_size
+        type: boolean
+        description: "[Optional] If true, lowers the size threshold from 1TB to 1GB for testing purposes (default: false)."
+      - name: dbt_project_only
+        type: boolean
+        description: "[Optional] If true, filters the results to only include tables that map to models in the current dbt project (default: true)."
+      - name: target_databases
+        type: list
+        description: "[Optional] A list of specific databases to scan. If empty, scans the whole account (subject to permissions)."
+      - name: target_schemas
+        type: list
+        description: "[Optional] A list of specific schemas to scan."
+      - name: preview_only
+        type: boolean
+        description: "[Optional] If true, prints results to the log. If false, returns the list object for programmatic use (default: true)."
