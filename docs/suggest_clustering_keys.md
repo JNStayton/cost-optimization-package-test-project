@@ -88,10 +88,34 @@ First, create a smaller, representative sample of your production table. Using B
 
 [Further Reading: Snowflake Sampling Documentation](https://docs.snowflake.com/en/sql-reference/constructs/sample)
 
+Example: Create a new dbt model to sample your fct_order_items table.
+
+> -- models/sandbox/fct_order_items_sample.sql
+```
+-- Creates a 10% sample
+{{
+    config(
+        materialized="table",
+        cluster_by=['order_date'] -- Your chosen clustering key
+    )
+}}
+
+select * from {{ ref('model_name') }} tablesample bernoulli (10); 
+```
+
+
+Run 
+`dbt run --select model_name` to build this clustered sample table.
 
 **Step 2: Check the Clustering Health**
 
 After the table is built, query Snowflake's SYSTEM$CLUSTERING_INFORMATION function to see how well-organized the data is.
+
+Query:
+```
+-- 
+select system$clustering_information('FCT_ORDER_ITEMS_SAMPLE');
+```
 
 [Further Reading: SYSTEM$CLUSTERING_INFORMATION Docs](https://docs.snowflake.com/en/sql-reference/functions/system_clustering_information)
 
