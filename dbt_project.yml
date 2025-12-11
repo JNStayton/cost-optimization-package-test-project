@@ -40,12 +40,12 @@ models:
     # Applies to all files under models/example/
     staging:
       +materialized: view
-      +database: co_packcage
-      # +schema: staging
+      +database: co_package
+      +schema: staging
     marts:
       +database: co_package
-      # +schema: marts
+      +schema: marts
     analytics_queries:
       +database: co_package
-      # +schema: ad_hoc
+      +schema: ad_hoc
       +materialized: view
