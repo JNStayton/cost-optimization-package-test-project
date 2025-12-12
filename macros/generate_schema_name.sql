@@ -10,7 +10,7 @@
 
         {{ custom_schema_name | trim }}
 
-    {% elif target.name == 'dev' %}
+    {% elif target.name == 'default' %}
 
         {{ default_schema }}_{{ custom_schema_name | trim }}
 
