@@ -8,7 +8,7 @@ macros:
         type: string
         description: "The name of the model to analyze for clustering key suggestions."
   - name: find_table_clustering_candidates
-    description: "{{ doc('find_table_clustering_candidates_test') }}"
+    # description: "{{ doc('find_table_clustering_candidates_test') }}"
     arguments:
       - name: lookback_days
         type: integer
