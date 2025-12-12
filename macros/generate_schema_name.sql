@@ -10,9 +10,9 @@
 
         {{ custom_schema_name | trim }}
 
-    {% elif target.name in ['default', 'dev'] %}
+    {% elif target.name == 'dev' %}
 
-        {{ default_schema }}
+        {{ default_schema }}_{{ custom_schema_name | trim }}
 
     {% else %}
 
