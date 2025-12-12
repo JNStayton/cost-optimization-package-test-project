@@ -1,4 +1,4 @@
-{% docs find_table_clustering_candidates %}
+{% docs find_table_clustering_candidates_test %}
 
 ## **Macro:** find_table_clustering_candidates
 
