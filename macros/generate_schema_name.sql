@@ -1,7 +1,3 @@
--- rely on target to tell dbt which schema to use, custom or default
--- set target in each developer profile to 'dev' 
--- set target in each job to 'prod' or 'staging' 
-
 {% macro generate_schema_name(custom_schema_name, node) %}
 
     {% set default_schema = target.schema %}
