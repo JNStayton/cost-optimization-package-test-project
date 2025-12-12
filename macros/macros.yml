@@ -2,7 +2,7 @@ version: 2
 
 macros:
   - name: suggest_clustering_keys
-    description: "{{ doc('suggest_clustering_keys') }}"
+    # description: "{{ doc('suggest_clustering_keys') }}"
     arguments:
       - name: model_name
         type: string
