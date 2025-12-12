@@ -36,7 +36,6 @@ clean-targets:         # directories to be removed by `dbt clean`
 
 models:
   cost_optimization_test:
-    # Applies to all files under models/example/
     staging:
       +materialized: view
       +database: co_package
