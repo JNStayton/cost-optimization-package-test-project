@@ -1,5 +1,18 @@
 {% macro find_table_clustering_candidates(lookback_days=7, ignore_table_size=false, dbt_project_only=true, target_databases=[], target_schemas=[], preview_only=true) %}
 
+  {#--
+    Orchestrates the analysis to suggest tables in project that might benefit from clustering.
+
+    [TODO] Creates/updates a model with the information.
+
+    How to run:
+    dbt run-operation find_table_clustering_candidates 
+
+    How to run with custom args:
+
+    dbt run-operation find_table_clustering_candidates --args '{lookback_days: 10, target_databases: ['db_1', 'db_2']}'
+  --#}
+
     {% if ignore_table_size %} 
         {% set min_size_gb = 1 %}
     {% else %} 

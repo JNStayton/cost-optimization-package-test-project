@@ -1,4 +1,5 @@
 {% macro suggest_clustering_keys(model_name, preview_only=true) %}
+
   {#--
     Orchestrates the analysis to suggest a clustering key for a given model.
 
