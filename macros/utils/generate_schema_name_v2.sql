@@ -1,4 +1,4 @@
-{% macro generate_schema_name(custom_schema_name, node) %}
+{% macro generate_schema_name_v2(custom_schema_name, node) %}
     
     {% set use_custom_schema = env_var('DBT_USE_CUSTOM_SCHEMA', 'false') | lower %}
 
