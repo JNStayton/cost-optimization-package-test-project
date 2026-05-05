@@ -2,7 +2,7 @@
 
 with source as (
 
-    select * from {{ source('unclustered', 'raw_customer') }}
+    select * from {{ source('unclustered', 'raw_customers') }}
 
 ),
 

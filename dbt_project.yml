@@ -23,6 +23,12 @@ clean-targets:         # directories to be removed by `dbt clean`
   - "target"
   - "dbt_packages"
 
+vars:
+  use_access_history_attribution: true
+  table_query_stats_full_account: false
+  table_query_stats_initial_lookback_days: 7
+  clustering_candidates_min_size_gb: 10
+
 
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
@@ -38,12 +44,13 @@ models:
   cost_optimization_test:
     staging:
       +materialized: view
-      +database: co_package
+      # +database: cost_optimization_test
+      +database: cost_optimization_test
       +schema: staging
     marts:
-      +database: co_package
+      +database: cost_optimization_test
       +schema: marts
     analytics_queries:
-      +database: co_package
+      +database: cost_optimization_test
       +schema: ad_hoc
       +materialized: view

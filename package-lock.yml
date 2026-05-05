@@ -2,7 +2,10 @@ packages:
 - package: dbt-labs/codegen
   name: codegen
   version: 0.14.0
+- git: https://github.com/JNStayton/cost-optimization-package.git
+  name: dbt_cost_optimization_package
+  revision: 45215e61ee5a0af340ca82c47d77f2324b80e896
 - package: dbt-labs/dbt_utils
   name: dbt_utils
   version: 1.3.3
-sha1_hash: 6fed6ebd9c6046a0a25ac4473e5eb19d029b007a
+sha1_hash: db0d94cbf530e6bf2e165f47b93cbe8a8c52c399

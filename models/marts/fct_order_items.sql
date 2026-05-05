@@ -1,0 +1,32 @@
+{{ config(materialized='table') }}
+
+select
+    customer_key,
+    customer_name,
+    customer_market_segment,
+    nation,
+    region,
+    order_key,
+    order_status,
+    order_date,
+    order_priority,
+    part_key,
+    supplier_key,
+    line_number,
+    quantity,
+    extended_price,
+    discount,
+    tax,
+    discounted_price,
+    charge_amount,
+    days_to_ship,
+    days_in_transit,
+    ship_mode,
+    ship_instruct,
+    return_flag,
+    line_status,
+    customer_running_revenue,
+    customer_line_item_seq,
+    rolling_avg_revenue_by_region,
+    daily_region_rank
+from {{ ref('int_order_item_summary') }}
