@@ -7,4 +7,4 @@ select
     'rose' as flower_name,
     'red' as color,
     'tree' as plant_type,
-    'flower' as new_col
+    'yes' as is_flowering
