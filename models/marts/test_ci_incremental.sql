@@ -1,0 +1,15 @@
+{{
+    config(
+        materialized='incremental',
+        unique_key='id'
+    )
+}}
+
+select
+    1 as id,
+    'tulip' as flower_name,
+    'yellow' as color
+
+{% if is_incremental() %}
+    where id > (select max(id) from {{ this }})
+{% endif %}
