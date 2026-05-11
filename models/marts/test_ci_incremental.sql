@@ -9,7 +9,7 @@ select
     1 as id,
     'tulip' as flower_name,
     'yellow' as color,
-    'tree' as plat_type
+    'tree' as plant_type
 
 {% if is_incremental() %}
     where id > (select max(id) from {{ this }})
