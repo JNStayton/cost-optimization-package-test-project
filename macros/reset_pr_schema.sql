@@ -1,4 +1,4 @@
-{% macro drop_pr_incremental_models() %}
+{% macro reset_pr_schema() %}
 
   {% set pr_id = env_var('DBT_CLOUD_PR_ID', '') %}
   {% set job_id = env_var('DBT_CLOUD_JOB_ID', '') %}
