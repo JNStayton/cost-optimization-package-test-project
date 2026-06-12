@@ -48,3 +48,9 @@ models:
       +database: cost_optimization_test
       +schema: ad_hoc
       +materialized: view
+
+
+# Package variables — override in consuming project's dbt_project.yml
+vars:
+  # --- Package enablement (opt-in) ---
+  dbt_cost_optimization_enabled: false  # Set to true in your project to activate
