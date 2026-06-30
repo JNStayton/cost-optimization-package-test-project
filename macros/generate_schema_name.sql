@@ -1,26 +1,20 @@
 {% macro generate_schema_name(custom_schema_name, node) %}
-    
-    {% set env_name = env_var('DBT_CLOUD_ENVIRONMENT_NAME') | lower %}
-    {% set job_context = env_var('DBT_CLOUD_INVOCATION_CONTEXT') | lower %}
 
-    {% set default_schema = target.schema %}
+    {%- set default_schema = target.schema -%}
+    {%- set custom_schema = custom_schema_name | lower if custom_schema_name is not none else none -%}
 
-    {% if env_name == 'development' %}
-
+    {# this env var is set in dbt cloud and points to the environment tag (DEV, PROD, STG) #}
+    {% if env_var('DBT_CLOUD_ENVIRONMENT_TYPE', '') == 'dev' %}
         {{ default_schema }}
-
-    {% elif job_context == 'ci' %}
-
-        {{ default_schema }}_{{ custom_schema_name | trim }}
-
-    {% elif env_name == 'prod' %}
-
-        {{ custom_schema_name | trim }}
-
+    {# fall back to the default schema in the event no custom schema has been set#}
+    {% elif custom_schema is none %}
+        {{ default_schema }}
+    {# if the invocation context is CI, we want to use the default schema to allow dbt to create and drop the PR schemas automatically #}
+    {% elif env_var('DBT_CLOUD_INVOCATION_CONTEXT', '') == 'ci' %}
+        {{ default_schema }}
+    {# for all other envs and contexts, use the custom schema #}
     {% else %}
-
-        {{ default_schema }}_{{ custom_schema_name | trim }}
-
+        {{ custom_schema | trim }}
     {% endif %}
 
 {% endmacro %}
