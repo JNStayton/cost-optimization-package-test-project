@@ -1,0 +1,36 @@
+version: 2
+
+models:
+  - name: stg_customers
+    description: Staging model for customer records sourced from `unclustered.raw_customers`.
+    columns:
+      - name: customer_key
+        description: Primary key for the customer.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: customer_name
+        description: Name of the customer.
+
+      - name: customer_address
+        description: Mailing address for the customer.
+        config:
+          tags: ["pii_address"]
+
+      - name: nation_key
+        description: Foreign key to the customer's nation.
+
+      - name: customer_phone_number
+        description: Phone number for the customer.
+        config:
+          tags: ["pii_phone"]
+
+      - name: customer_account_balance
+        description: Current account balance for the customer.
+
+      - name: customer_market_segment
+        description: Market segment assigned to the customer.
+
+      - name: customer_comment
+        description: Freeform comment associated with the customer.
