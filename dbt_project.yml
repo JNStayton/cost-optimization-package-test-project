@@ -48,6 +48,12 @@ models:
       +schema: staging
     marts:
       +database: db_marts
+      # +database: >
+      #   {% if env_var('DBT_CLOUD_ENVIRONMENT_TYPE', '') == 'dev' %}
+      #     db_test
+      #   {% else %}
+      #     db_marts
+      #   {% endif %}
       +schema: marts
     analytics_queries:
       +database: db_analytics
