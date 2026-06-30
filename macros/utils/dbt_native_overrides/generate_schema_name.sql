@@ -5,7 +5,7 @@
 
     {# this env var is set in dbt cloud and points to the environment tag (DEV, PROD, STG) #}
     {% if env_var('DBT_CLOUD_ENVIRONMENT_TYPE', '') == 'dev' %}
-        {{ default_schema }}_{{custom_schema | trim }}
+        {{ default_schema }}
     {# fall back to the default schema in the event no custom schema has been set#}
     {% elif custom_schema is none %}
         {{ default_schema }}
