@@ -44,13 +44,12 @@ models:
   cost_optimization_test:
     staging:
       +materialized: view
-      # +database: cost_optimization_test
-      +database: cost_optimization_test
+      +database: db_staging
       +schema: staging
     marts:
-      +database: cost_optimization_test
+      +database: db_marts
       +schema: marts
     analytics_queries:
-      +database: cost_optimization_test
+      +database: db_analytics
       +schema: ad_hoc
       +materialized: view
