@@ -1,7 +1,6 @@
 {{
     config(
-        materialized='incremental',
-        meta={'schema_refresh': 'auto'}
+        materialized='incremental'
     )
 }}
 
@@ -40,8 +39,9 @@ select
     order_items.order_key,
     order_items.order_date,
     customers.customer_key,
-    customers.nation_key,
-    customers.nation
+    customers.nation,
+    customers.nation_key
+
 
 from
     order_items
