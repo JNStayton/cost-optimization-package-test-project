@@ -5,6 +5,10 @@ name: 'cost_optimization_test'
 version: '1.0.0'
 config-version: 2
 
+dispatch:
+  - macro_namespace: dbt
+    search_order: ['cost_optimization_test', 'dbt']
+
 # This setting configures which "profile" dbt uses for this project.
 profile: 'default'
 
@@ -40,21 +44,23 @@ clean-targets:         # directories to be removed by `dbt clean`
 # continue to be built as views. These settings can be overridden in the individual model files
 # using the `{{ config(...) }}` macro.
 
+# set where your masking policies and tags should live (e.g. a governance database)
 vars:
   dbt_tags__database: MASKING_DEMO
   dbt_tags__schema: TAG_OBJECTS
   dbt_tags__opt_in_default_naming_config: False
 
+# apply the tags as a post hook directly under the models for a given project
 models:
   cost_optimization_test:
     +post-hook:
       - "{{ dbt_tags.apply_column_tags() }}"
     staging:
       +materialized: view
-      +database: db_staging
+      +database: cost_optimization_test
       +schema: staging
     marts:
-      +database: db_marts
+      +database: cost_optimization_test
       # +database: >
       #   {% if env_var('DBT_CLOUD_ENVIRONMENT_TYPE', '') == 'dev' %}
       #     db_test
@@ -63,6 +69,9 @@ models:
       #   {% endif %}
       +schema: marts
     analytics_queries:
-      +database: db_analytics
+      +database: cost_optimization_test
       +schema: ad_hoc
       +materialized: view
+
+flags:
+  require_explicit_package_overrides_for_builtin_materializations: false

@@ -4,7 +4,7 @@
     {%- set custom_database = custom_database_name | trim if custom_database_name is not none else none -%}
 
     {% if env_var('DBT_CLOUD_ENVIRONMENT_TYPE', '') == 'dev' %}
-        {{ default_database }}
+        {{ custom_database }}
     {% elif env_var('DBT_CLOUD_INVOCATION_CONTEXT', '') == 'ci' %}
         {{ default_database }}
     {% elif custom_database is none %}
