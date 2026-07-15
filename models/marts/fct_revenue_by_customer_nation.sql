@@ -1,6 +1,7 @@
 {{
     config(
-        materialized='incremental'
+        materialized='incremental',
+        meta={'on_schema_drift': 'auto'}
     )
 }}
 

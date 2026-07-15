@@ -1,0 +1,66 @@
+version: 2
+
+macros:
+  - name: strip_incremental_filters
+    description: >
+      Strips all is_incremental() conditional blocks from a model's compiled SQL
+      before it is used for schema drift detection or a full rebuild.
+
+      Uses raw_code (the unrendered Jinja source) to locate incremental blocks via
+      regex, then builds a pattern from each block's inner content — escaping literal
+      SQL and replacing Jinja expressions with a Snowflake FQN pattern. The pattern
+      is then used to remove the corresponding rendered block from compiled_code.
+
+      Uses Jinja namespace() to allow the result variable to persist across loop
+      iterations, since Jinja does not allow variable mutation within loop scope.
+
+      Why this is needed - when is_incremental() evaluates to true at compile time,
+      the incremental WHERE filter is baked into compiled_code. If that SQL is used
+      directly for a schema dry-run or a full rebuild, Snowflake may error on a
+      correlated aggregate (the subquery referencing the same table being rebuilt),
+      or the full rebuild may produce an empty table because the WHERE filter excludes
+      rows from a table that was just dropped.
+
+      Supported patterns - early CTE filters, multiple filters across CTEs, any Jinja
+      expression in the filter body (e.g. this, ref). Not supported - whitespace-trimming
+      Jinja tags.
+
+      Requires modules.re (minijinja_contrib) — available in dbt-fusion 2.0.0-preview.196+.
+
+      Full documentation - see on_schema_drift.md.
+    arguments:
+      - name: raw_code
+        type: string
+        description: >
+          The unrendered Jinja source of the model, available as model['raw_code']
+          inside a materialization at runtime.
+      - name: compiled_code
+        type: string
+        description: >
+          The fully rendered SQL of the model, available as compiled_code inside a
+          materialization at runtime. This is the string that gets cleaned and returned.
+
+  - name: get_schema_dry_run_columns
+    description: >
+      Infers the column list of a model's SQL by running a zero-cost dry-run query
+      against Snowflake using SELECT star FROM subquery WHERE false LIMIT 0.
+
+      Snowflake resolves the column metadata from the query plan without scanning any
+      data. Returns a list of uppercase column name strings.
+
+      Must be called with SQL that has had its is_incremental() filter blocks stripped
+      via strip_incremental_filters. Passing compiled_code directly risks Snowflake
+      error 002036 — a correlated aggregate error — when the incremental WHERE subquery
+      references a CTE that shares a column name with the outer query.
+
+      Used by the on_schema_drift detection block in
+      snowflake_incremental_schema_refresh.sql to infer incoming columns before the
+      tmp relation is built.
+
+      Full documentation - see on_schema_drift.md.
+    arguments:
+      - name: clean_sql
+        type: string
+        description: >
+          The model's compiled SQL with all is_incremental() filter blocks removed.
+          Produced by strip_incremental_filters(raw_code, compiled_code).
