@@ -4,4 +4,4 @@ packages:
   - package: dbt-labs/dbt_utils
     version: 1.3.3
   - git: https://github.com/JNStayton/cost-optimization-package.git
-    revision: main
+    revision: feature/dbt-materialization-recs-snowflake
