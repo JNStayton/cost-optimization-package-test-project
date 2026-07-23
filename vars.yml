@@ -1,4 +1,10 @@
 vars:
   dbt_cost_optimization_enabled: true
   table_materialization_lookback_days: 90
-  clustering_candidates_min_size_gb: 10
+  clustering_candidates_min_size_gb: 1
+  clustering_candidates_min_query_count: 1
+  clustering_candidates_lookback_days: 90
+  incremental_candidates_lookback_days: 90
+  incremental_candidates_min_build_time_sec: 60
+  incremental_candidates_min_size_gb: 1
+  incremental_candidates_min_qualified_build_days: 1
