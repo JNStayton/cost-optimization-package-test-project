@@ -1,6 +1,7 @@
 {{
     config(
-        materialized='incremental'
+        materialized='incremental',
+        meta={'on_schema_drift': 'auto'}
     )
 }}
 
@@ -49,6 +50,6 @@ left join
 
 {% if is_incremental() %}
 
-  where order_date > (select max(order_date) from {{ this }})
+  where order_date > (select coalesce(max(order_date), '1900-01-01') from {{ this }})
 
 {% endif %}
